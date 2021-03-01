@@ -17,16 +17,30 @@ function setup() {
     internalBoard = startPosition;
 }
 
+function drawCoords() {
+    for (let file = 0; file < 8; file++) {
+        for (let rank = 0; rank < 8; rank ++) {
+            var isLightSquare = (file + rank) % 2 != 0;
+            var numColour = (isLightSquare) ? lightColour : darkColour;
+            
+            ctx.fillStyle = numColour;
+             
+        }
+    }
+    update();
+}
+
 function createBoard() {
     for (let file = 0; file < 8; file ++) {
         for(let rank = 0; rank < 8; rank ++) {
             var isLightSquare = (file + rank) % 2 != 0;
 
-            var squareColour = (isLightSquare) ? darkColour : lightColour ;
-            var pos = [file * 50, rank * 50];
+            var squareColour = (isLightSquare) ? darkColour : lightColour;
+            var pos = [file * 70, rank * 70];
 
             ctx.fillStyle = squareColour;
-            ctx.fillRect(pos[0], pos[1], 50, 50);
+            ctx.fillRect(pos[0], pos[1], 70, 70);
         }
     }
+    update();
 }
