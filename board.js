@@ -1,6 +1,6 @@
 const util = new Util();
 
-var internalBoard = util.buildGrid(8, 8, 0);
+let internalBoard = util.buildGrid(8, 8, 0);
 
 const startPosition = [
     [10, 11, 12, 9, 8, 12, 11, 10],
@@ -18,16 +18,26 @@ function setup() {
 }
 
 function drawCoords() {
-    for (let file = 0; file < 8; file++) {
-        for (let rank = 0; rank < 8; rank ++) {
-            var isLightSquare = (file + rank) % 2 != 0;
-            var numColour = (isLightSquare) ? lightColour : darkColour;
+    ctx.font = "15px Verdana";
+    var isLightSquare = true;
+    const rankLets = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+    for (let rank = 0; rank < 8; rank++) {
+        isLightSquare = !isLightSquare;
+        var numColour = (isLightSquare) ? darkColour : lightColour;
             
-            ctx.fillStyle = numColour;
-             
-        }
+        ctx.fillStyle = numColour;
+        ctx.fillText(rankLets[rank], rank * 70 + 58, 556);
     }
-    update();
+    
+    var count = 8
+    for (let file = 0; file < 8; file++) {
+        isLightSquare = !isLightSquare;
+        var numColour = (isLightSquare) ? lightColour : darkColour  ;
+            
+        ctx.fillStyle = numColour;
+        ctx.fillText(count, 4, file * 70 + 15);
+        count--;
+    }
 }
 
 function createBoard() {

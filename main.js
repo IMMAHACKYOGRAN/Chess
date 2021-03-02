@@ -30,6 +30,7 @@ function render() {
 
 function update() {
     render();
+    drawCoords();
 }
 
 canvas.addEventListener('click', function (e) {
