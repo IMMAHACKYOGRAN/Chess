@@ -1,12 +1,12 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
-canvas.width = 700;
+canvas.width = 560;
 canvas.height = 560;
 const width = canvas.width,
     height = canvas.height;
 
-class Util {  
+class Util {
     loadImage (url) {
         return new Promise(resolve => {
             const img = new Image();
@@ -28,5 +28,11 @@ class Util {
         return new Array(columns).fill(null)
           .map(() => new Array(rows).fill(populate));
     }
-    
+
+    createVector (x, y) {
+        var vec = {x: x, y: y}
+        return vec;
+    }
 }
+
+const util = new Util();

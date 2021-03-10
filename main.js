@@ -1,25 +1,45 @@
+const tileSize = 70;
 const board = new Board();
 const pieceUrl = new Image();
 pieceUrl.src = './Textures/Pieces.png';
 
-ctx.fillStyle = '#33322e';
-ctx.fillRect(0, 0, width, height);
+let moving = false, movingPiece;
+let mouse = {pos:{x:0,y:0}}, pixelMouse = {pos:{x:0,y:0}};
 
 function setup () {
     board.drawBoard();
     board.setupPieces();
-    console.log(board.whitePieces);
-    board.render();
+    update();
 }
 
-canvas.addEventListener('click', function (e) {
-    const mouse = {
-        pos: { x: Math.floor((e.x) / 70), y: Math.floor((e.y) / 70) }
+function update() {
+    board.drawBoard();
+    board.render();
+    requestAnimationFrame(update);
+}
+
+canvas.addEventListener('mousedown', function (e) {
+    if(!moving) {
+        movingPiece = board.getPieceAt(mouse.pos.x, mouse.pos.y);
+        if(movingPiece != null) {
+            movingPiece.movingThisPiece = true;
+        } else {
+            return;
+        }
+    } else {
+        if(movingPiece.canMove(mouse.pos.x, mouse.pos.y, board)) {
+            movingPiece.move(mouse.pos.x, mouse.pos.y);
+            movingPiece.movingThisPiece = false;
+        } else {
+            return;
+        }
     }
-        board.drawBoard();
-        ctx.fillStyle = '#00a5ff7f';
-        ctx.fillRect(mouse.pos.x * 70, mouse.pos.y * 70, mouse.pos.x + 70 - mouse.pos.x, mouse.pos.y + 70 - mouse.pos.y);
-        board.render();
+    moving = !moving;
+});
+
+canvas.addEventListener('mousemove', function(e) {
+    mouse = {pos: { x: Math.floor((e.x) / tileSize), y: Math.floor((e.y) / tileSize) }}
+    pixelMouse = {pos:{x:e.x,y:e.y}}
 });
 
 pieceUrl.addEventListener('load', () => {setup()});
